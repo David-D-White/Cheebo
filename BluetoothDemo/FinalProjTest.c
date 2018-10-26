@@ -1,3 +1,6 @@
+//I'm lazy
+//Refer to comments on struct version
+//Program flow should be more or less the same
 task main ()
 {
   string str1 = "";
