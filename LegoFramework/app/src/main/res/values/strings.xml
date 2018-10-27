@@ -4,4 +4,5 @@
     <string name="connect">Connect</string>
     <string name="exit">Exit</string>
     <string name="mac_add">Enter MAC Address:</string>
+    <string name="current_device">Current_Device</string>
 </resources>
