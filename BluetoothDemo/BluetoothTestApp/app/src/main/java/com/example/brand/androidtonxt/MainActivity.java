@@ -141,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
                 StringBuilder str = new StringBuilder();
                 str.append((char) 0x2);
                 str.append(dataIn);
+                while(str.length() < 19){
+                    str.append(" ");
+                }
                 str.append((char) 0x4);
                 byte[] data = str.toString().getBytes();
                 sendMessage(data);

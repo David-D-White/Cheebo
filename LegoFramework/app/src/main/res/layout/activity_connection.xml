@@ -6,43 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".ConnectionActivity">
 
-    <EditText
-        android:id="@+id/Mac_Add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
+    <include
+        android:id="@+id/app_bar_home"
+        layout="@layout/app_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Prompt" />
-
-    <TextView
-        android:id="@+id/Prompt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/mac_add"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:layout_editor_absoluteY="0dp" />
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="368dp"
+        android:layout_height="330dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_home">
+        <ListView
+            android:id="@+id/deviceList"
+            android:layout_width="352dp"
+            android:layout_height="344dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:fastScrollAlwaysVisible="true"
+            android:fastScrollEnabled="true"
+            android:transcriptMode="alwaysScroll"
+            android:stackFromBottom="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.v7.widget.LinearLayoutCompat>
 
     <Button
-        android:id="@+id/Connect"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="52dp"
-        android:onClick="onClick"
+        android:layout_marginTop="28dp"
         android:text="@string/connect"
+        android:onClick="onClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Mac_Add" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat" />
 </android.support.constraint.ConstraintLayout>
