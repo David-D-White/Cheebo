@@ -1,2 +1,0 @@
-Bluetooth app and corresponding RobotC code
-Shitty code
