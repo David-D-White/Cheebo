@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import ca.daviddwhite.deep_chess.net.Neuron.Synapse;
-import processing.core.PApplet;
+// import processing.core.PApplet;
 
 /**
  * A basic neural network class with methods for calculation and mutation
@@ -400,103 +400,123 @@ public class NeuralNet {
 	}
 
 	// Debug Method
-	public void draw(PApplet canvas, float x, float y, float height, float width, float neuronDiam) {
-		int textColor = 0, neuronColor = 255, synapseColor = 150, weightColor = Color.RED.getRGB();
-		int neuronLineColor = 0;
-		int weightDist = 4;
-		String format = "%.4f";
-
-		canvas.ellipseMode(PApplet.CENTER);
-		// canvas.textAlign(PApplet.CENTER, PApplet.CENTER);
-		// canvas.textSize(neuronDiam / 5);
-
-		int maxNeurons = Math.max(inputs.length, outputs.length);
-		for (Neuron[] ns : hiddenLayers)
-			maxNeurons = Math.max(ns.length, maxNeurons);
-		float horizontalStep = width / (hiddenLayers.length + 1);
-		float verticalStep = height / (maxNeurons - 1);
-
-		// Draw Synapses
-		canvas.strokeWeight(1);
-		canvas.fill(weightColor);
-		canvas.stroke(synapseColor);
-		for (int i = 0; i < inputs.length; i++) {
-			float center1 = (inputs.length - 1) / 2f * verticalStep;
-			float center2 = (hiddenLayers[0].length - 1) / 2f * verticalStep;
-			Synapse[] connections = inputs[i].getFrontConnections();
-			for (int j = 0; j < connections.length; j++) {
-				float x1 = x, x2 = x + horizontalStep;
-				float y1 = y + i * verticalStep - center1, y2 = y + j * verticalStep - center2;
-				float wx = ((weightDist - 1) * x1 + x2) / weightDist, wy = ((weightDist - 1) * y1 + y2) / weightDist;
-				canvas.line(x1, y1, x2, y2);
-				// canvas.text(String.format(format, connections[j].weight), wx, wy);
-			}
-		}
-		for (int i = 0; i < hiddenLayers.length - 1; i++) {
-			for (int j = 0; j < hiddenLayers[i].length; j++) {
-				float center1 = (hiddenLayers[i].length - 1) / 2f * verticalStep;
-				float center2 = (hiddenLayers[i + 1].length - 1) / 2f * verticalStep;
-				Synapse[] connections = hiddenLayers[i][j].getFrontConnections();
-				for (int k = 0; k < connections.length; k++) {
-					float x1 = x + (i + 1) * horizontalStep, x2 = x + (i + 2) * horizontalStep;
-					float y1 = y + j * verticalStep - center1, y2 = y + k * verticalStep - center2;
-					float wx = ((weightDist - 1) * x1 + x2) / weightDist, wy = ((weightDist - 1) * y1 + y2) / weightDist;
-					canvas.line(x1, y1, x2, y2);
-					// canvas.text(String.format(format, connections[k].weight), wx, wy);
-				}
-			}
-		}
-		for (int i = 0; i < hiddenLayers[hiddenLayers.length - 1].length; i++) {
-			float center1 = (hiddenLayers[hiddenLayers.length - 1].length - 1) / 2f * verticalStep;
-			float center2 = (outputs.length - 1) / 2f * verticalStep;
-			Synapse[] connections = hiddenLayers[hiddenLayers.length - 1][i].getFrontConnections();
-			for (int j = 0; j < connections.length; j++) {
-				float x1 = x + (hiddenLayers.length) * horizontalStep, x2 = x + (hiddenLayers.length + 1) * horizontalStep;
-				float y1 = y + i * verticalStep - center1, y2 = y + j * verticalStep - center2;
-				float wx = ((weightDist - 1) * x1 + x2) / weightDist, wy = ((weightDist - 1) * y1 + y2) / weightDist;
-				canvas.line(x1, y1, x2, y2);
-				// canvas.text(String.format(format, connections[j].weight), wx, wy);
-			}
-		}
-
-		// Draw Neurons
-		canvas.fill(neuronColor);
-		canvas.stroke(neuronLineColor);
-		for (int i = 0; i < inputs.length; i++) {
-			float center = (inputs.length - 1) / 2f * verticalStep;
-			int synapseCount = inputs[i].getBackConnections().length + inputs[i].getFrontConnections().length;
-			canvas.ellipse(x, y + i * verticalStep - center, neuronDiam, neuronDiam);
-			canvas.fill(textColor);
-			// canvas.text(String.format(format, inputs[i].value), x, y + i * verticalStep -
-			// center);
-			// canvas.text("" + synapseCount, x, y + i * verticalStep - center + neuronDiam
-			// / 2 + neuronDiam / 5);
-			canvas.fill(neuronColor);
-		}
-		for (int i = 0; i < hiddenLayers.length; i++) {
-			for (int j = 0; j < hiddenLayers[i].length; j++) {
-				float center = (hiddenLayers[i].length - 1) / 2f * verticalStep;
-				int synapseCount = hiddenLayers[i][j].getBackConnections().length + hiddenLayers[i][j].getFrontConnections().length;
-				canvas.ellipse(x + (i + 1) * horizontalStep, y + j * verticalStep - center, neuronDiam, neuronDiam);
-				canvas.fill(textColor);
-				// canvas.text(String.format(format, hiddenLayers[i][j].value), x + (i + 1) *
-				// horizontalStep, y + j * verticalStep - center);
-				// canvas.text("" + synapseCount, x + (i + 1) * horizontalStep, y + j *
-				// verticalStep - center + neuronDiam / 2 + neuronDiam / 5);
-				canvas.fill(neuronColor);
-			}
-		}
-		for (int i = 0; i < outputs.length; i++) {
-			float center = (outputs.length - 1) / 2f * verticalStep;
-			int synapseCount = outputs[i].getBackConnections().length + outputs[i].getFrontConnections().length;
-			canvas.ellipse(x + (hiddenLayers.length + 1) * horizontalStep, y + i * verticalStep - center, neuronDiam, neuronDiam);
-			canvas.fill(textColor);
-			// canvas.text(String.format(format, outputs[i].value), x + (hiddenLayers.length
-			// + 1) * horizontalStep, y + i * verticalStep - center);
-			// canvas.text("" + synapseCount, x + (hiddenLayers.length + 1) *
-			// horizontalStep, y + i * verticalStep - center + neuronDiam / 2 + neuronDiam /
-			// 5);
-			canvas.fill(neuronColor);
-		}
-	}
+	// public void draw(PApplet canvas, float x, float y, float height, float width,
+	// float neuronDiam) {
+	// int textColor = 0, neuronColor = 255, synapseColor = 150, weightColor =
+	// Color.RED.getRGB();
+	// int neuronLineColor = 0;
+	// int weightDist = 4;
+	// String format = "%.4f";
+	//
+	// canvas.ellipseMode(PApplet.CENTER);
+	// // canvas.textAlign(PApplet.CENTER, PApplet.CENTER);
+	// // canvas.textSize(neuronDiam / 5);
+	//
+	// int maxNeurons = Math.max(inputs.length, outputs.length);
+	// for (Neuron[] ns : hiddenLayers)
+	// maxNeurons = Math.max(ns.length, maxNeurons);
+	// float horizontalStep = width / (hiddenLayers.length + 1);
+	// float verticalStep = height / (maxNeurons - 1);
+	//
+	// // Draw Synapses
+	// canvas.strokeWeight(1);
+	// canvas.fill(weightColor);
+	// canvas.stroke(synapseColor);
+	// for (int i = 0; i < inputs.length; i++) {
+	// float center1 = (inputs.length - 1) / 2f * verticalStep;
+	// float center2 = (hiddenLayers[0].length - 1) / 2f * verticalStep;
+	// Synapse[] connections = inputs[i].getFrontConnections();
+	// for (int j = 0; j < connections.length; j++) {
+	// float x1 = x, x2 = x + horizontalStep;
+	// float y1 = y + i * verticalStep - center1, y2 = y + j * verticalStep -
+	// center2;
+	// float wx = ((weightDist - 1) * x1 + x2) / weightDist, wy = ((weightDist - 1)
+	// * y1 + y2) / weightDist;
+	// canvas.line(x1, y1, x2, y2);
+	// // canvas.text(String.format(format, connections[j].weight), wx, wy);
+	// }
+	// }
+	// for (int i = 0; i < hiddenLayers.length - 1; i++) {
+	// for (int j = 0; j < hiddenLayers[i].length; j++) {
+	// float center1 = (hiddenLayers[i].length - 1) / 2f * verticalStep;
+	// float center2 = (hiddenLayers[i + 1].length - 1) / 2f * verticalStep;
+	// Synapse[] connections = hiddenLayers[i][j].getFrontConnections();
+	// for (int k = 0; k < connections.length; k++) {
+	// float x1 = x + (i + 1) * horizontalStep, x2 = x + (i + 2) * horizontalStep;
+	// float y1 = y + j * verticalStep - center1, y2 = y + k * verticalStep -
+	// center2;
+	// float wx = ((weightDist - 1) * x1 + x2) / weightDist, wy = ((weightDist - 1)
+	// * y1 + y2) / weightDist;
+	// canvas.line(x1, y1, x2, y2);
+	// // canvas.text(String.format(format, connections[k].weight), wx, wy);
+	// }
+	// }
+	// }
+	// for (int i = 0; i < hiddenLayers[hiddenLayers.length - 1].length; i++) {
+	// float center1 = (hiddenLayers[hiddenLayers.length - 1].length - 1) / 2f *
+	// verticalStep;
+	// float center2 = (outputs.length - 1) / 2f * verticalStep;
+	// Synapse[] connections = hiddenLayers[hiddenLayers.length -
+	// 1][i].getFrontConnections();
+	// for (int j = 0; j < connections.length; j++) {
+	// float x1 = x + (hiddenLayers.length) * horizontalStep, x2 = x +
+	// (hiddenLayers.length + 1) * horizontalStep;
+	// float y1 = y + i * verticalStep - center1, y2 = y + j * verticalStep -
+	// center2;
+	// float wx = ((weightDist - 1) * x1 + x2) / weightDist, wy = ((weightDist - 1)
+	// * y1 + y2) / weightDist;
+	// canvas.line(x1, y1, x2, y2);
+	// // canvas.text(String.format(format, connections[j].weight), wx, wy);
+	// }
+	// }
+	//
+	// // Draw Neurons
+	// canvas.fill(neuronColor);
+	// canvas.stroke(neuronLineColor);
+	// for (int i = 0; i < inputs.length; i++) {
+	// float center = (inputs.length - 1) / 2f * verticalStep;
+	// int synapseCount = inputs[i].getBackConnections().length +
+	// inputs[i].getFrontConnections().length;
+	// canvas.ellipse(x, y + i * verticalStep - center, neuronDiam, neuronDiam);
+	// canvas.fill(textColor);
+	// // canvas.text(String.format(format, inputs[i].value), x, y + i *
+	// verticalStep -
+	// // center);
+	// // canvas.text("" + synapseCount, x, y + i * verticalStep - center +
+	// neuronDiam
+	// // / 2 + neuronDiam / 5);
+	// canvas.fill(neuronColor);
+	// }
+	// for (int i = 0; i < hiddenLayers.length; i++) {
+	// for (int j = 0; j < hiddenLayers[i].length; j++) {
+	// float center = (hiddenLayers[i].length - 1) / 2f * verticalStep;
+	// int synapseCount = hiddenLayers[i][j].getBackConnections().length +
+	// hiddenLayers[i][j].getFrontConnections().length;
+	// canvas.ellipse(x + (i + 1) * horizontalStep, y + j * verticalStep - center,
+	// neuronDiam, neuronDiam);
+	// canvas.fill(textColor);
+	// // canvas.text(String.format(format, hiddenLayers[i][j].value), x + (i + 1) *
+	// // horizontalStep, y + j * verticalStep - center);
+	// // canvas.text("" + synapseCount, x + (i + 1) * horizontalStep, y + j *
+	// // verticalStep - center + neuronDiam / 2 + neuronDiam / 5);
+	// canvas.fill(neuronColor);
+	// }
+	// }
+	// for (int i = 0; i < outputs.length; i++) {
+	// float center = (outputs.length - 1) / 2f * verticalStep;
+	// int synapseCount = outputs[i].getBackConnections().length +
+	// outputs[i].getFrontConnections().length;
+	// canvas.ellipse(x + (hiddenLayers.length + 1) * horizontalStep, y + i *
+	// verticalStep - center, neuronDiam, neuronDiam);
+	// canvas.fill(textColor);
+	// // canvas.text(String.format(format, outputs[i].value), x +
+	// (hiddenLayers.length
+	// // + 1) * horizontalStep, y + i * verticalStep - center);
+	// // canvas.text("" + synapseCount, x + (hiddenLayers.length + 1) *
+	// // horizontalStep, y + i * verticalStep - center + neuronDiam / 2 +
+	// neuronDiam /
+	// // 5);
+	// canvas.fill(neuronColor);
+	// }
+	// }
 }
