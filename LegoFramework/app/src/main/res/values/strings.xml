@@ -1,10 +1,11 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">LegoFramework</string>
     <string name="start">Start</string>
-    <string name="connect" tools:ignore="ExtraTranslation">Connect</string>
-    <string name="scan_button_1">Begin Scan</string>
-    <string name="scan_button_2">End Scan</string>
+    <string name="connect">Align</string>
     <string name="exit">Exit</string>
     <string name="mac_add">Enter MAC Address:</string>
     <string name="current_device">Current_Device</string>
+    <string name="cheebo">CHEEBO</string>
+    <string name="textview">Enter MAC address:</string>
+    <string name="MAC_HINT">00:00:00:00:00:00</string>
 </resources>
