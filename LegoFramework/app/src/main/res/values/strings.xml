@@ -1,7 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">LegoFramework</string>
     <string name="start">Start</string>
-    <string name="connect">Connect</string>
+    <string name="connect" tools:ignore="ExtraTranslation">Connect</string>
+    <string name="scan_button_1">Begin Scan</string>
+    <string name="scan_button_2">End Scan</string>
     <string name="exit">Exit</string>
     <string name="mac_add">Enter MAC Address:</string>
     <string name="current_device">Current_Device</string>

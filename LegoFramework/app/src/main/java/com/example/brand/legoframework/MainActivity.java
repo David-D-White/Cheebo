@@ -21,7 +21,6 @@ import java.io.InputStream;
 //Prototype/framework for the app. Complies and runs but it doesn't really do anything as of now
 //This activity is more or less complete
 //TODO: Check exit ops and program shutdown procedure
-//TODO: Improve UI - custom action bar
 public class MainActivity extends AppCompatActivity {
     public static String DEVICE_KEY = "Device_DAT";
     private TaskStackBuilder screenStack;
