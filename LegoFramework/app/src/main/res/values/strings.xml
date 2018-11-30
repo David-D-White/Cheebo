@@ -1,11 +1,3 @@
 <resources>
     <string name="app_name">LegoFramework</string>
-    <string name="start">Start</string>
-    <string name="connect">Align</string>
-    <string name="exit">Exit</string>
-    <string name="mac_add">Enter MAC Address:</string>
-    <string name="current_device">Current_Device</string>
-    <string name="cheebo">CHEEBO</string>
-    <string name="textview">Enter MAC address:</string>
-    <string name="MAC_HINT">00:00:00:00:00:00</string>
 </resources>
