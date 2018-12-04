@@ -194,6 +194,7 @@ bool waitTurnTimer ()
   return time1[T1] < TURN_TIME;
 }
 
+//Calibration process to set board alignment
 void calibrate()
 {
   int calibratePos [16][2] = {
@@ -214,6 +215,7 @@ void commandToAction(tByteArr &charCommand)
   int index = 0;
   bool isWhite = false;
 
+  //Skip error bits
   for (int errBit = 0; errBit < charCommand.length; errBit ++)
   {
     if (charCommand.array[errBit] != 0x02)
@@ -223,12 +225,15 @@ void commandToAction(tByteArr &charCommand)
     }
   }
 
+  //Check white or black
   if(charCommand.array[index] == 'W')
     isWhite = true;
   index ++;
 
+  //Continue to end of command
   while(charCommand.array[index] != 0x00 && charCommand.array[index] != 0x04 && index < 20)
   {
+	//Move Command
     if(charCommand.array[index] == 'M')
     {
       resetMotors();
@@ -250,7 +255,7 @@ void commandToAction(tByteArr &charCommand)
       movePiece(xFrom, yFrom, xTo, yTo);
       index += 5;
     }
-    else if(charCommand.array[index] == 'R')
+    else if(charCommand.array[index] == 'R') // Remove Command
     {
       resetMotors();
       int xRemove = 0, yRemove = 0;
@@ -267,7 +272,7 @@ void commandToAction(tByteArr &charCommand)
       removePiece(xRemove, yRemove);
       index += 3;
     }
-    else if(charCommand.array[index] == 'P')
+    else if(charCommand.array[index] == 'P') // Promotion Commnd
     {
       string piece = "";
       if(charCommand.array[index+1] == 'q')
